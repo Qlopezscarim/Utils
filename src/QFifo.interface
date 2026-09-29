@@ -1,0 +1,20 @@
+#   The intent of this module is to create a generic zero copy fifo implementation for a SEQUENTIAL SIGNAL PROCESSING CHAIN
+
+#   This generic FIFO will handle data passing/information as follows:
+
+#   There should be a predefined processing chain: This will be passed as an enumuration and should be defined in TOP_LEVEL.master
+#   std::atomic should all be initialized to the very first "state" (First enumuration) and is required to fill the data buffers and alter the void* to real data in the first "state"
+#   Every time a metadata struct is accessed by state and deemed finished with a state, the associated atomic should be incremented.
+#   There will be a pointer associated with each "state" to allows o(1) access time rather than searching for the most recent filled buffer
+#   every time a metadata struct is done being altered by a thread, that thread should increment the pointer associated with it's "state" 
+
+
+	#METADATA
+	#std::atomic associated_state ---- This defines what stage the current data is intended for
+	#void* data                   ---- Pointers to where data lives
+
+#Buffer                       ---- statically allocated group of METADATA structs
+#std::vector<>                ---- a pointer for each "stage"
+
+#funct get_new_metadata
+#funct next_state
