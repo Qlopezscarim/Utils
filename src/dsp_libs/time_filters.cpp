@@ -17,11 +17,16 @@ auto Qnaive_time_impl(const std::vector<T>& a, const std::vector<U>& b) -> std::
     std::vector<ResultType> result;
     result.reserve(a.size() + b.size() - 1);
 
-    for (std::size_t i = 0; i < a.size(); ++i) 
+    for (std::size_t n = 0; n < a.size() ; n++)
     {
-        result.push_back( static_cast<ResultType>(a[i]) + static_cast<ResultType>(b[i]) );
-    }
+        ResultType intermediate_sum = 0;
+        for (std::size_t k = 0; k < b.size(); ++k) 
+        {
+            ResultType intermediate_sum = intermediate_sum + static_cast<ResultType>( a[k] ) * static_cast<ResultType>( b[n - k] )
+        }
+        result.push_back( static_cast<ResultType>( a[k] ) * static_cast<ResultType>( b[n - k] ) );
 
+    }
     return result;
 }
 
